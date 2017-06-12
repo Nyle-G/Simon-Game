@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<title>Simon Game</title>
+<script>
+function startGame(){
+	comChoice();
+	console.log(computerChoice);
+}
+function whiteRed(){
+	document.getElementById("red").style.backgroundColor = "white";
+}
+function whiteBlue(){
+	document.getElementById("blue").style.backgroundColor = "white";
+}
+function whiteGreen(){
+	document.getElementById("green").style.backgroundColor = "white";
+}
+function whiteYellow(){
+	document.getElementById("yellow").style.backgroundColor = "white";
+}
+function colorRed(){
+	document.getElementById("red").style.backgroundColor = "red";
+}
+function colorBlue(){
+	document.getElementById("blue").style.backgroundColor = "blue";
+}
+function colorGreen(){
+	document.getElementById("green").style.backgroundColor = "green";
+}
+function colorYellow(){
+	document.getElementById("yellow").style.backgroundColor = "yellow";
+}
+function comChoice(){
+	var randomNum = Math.ceil(Math.random()*4);
+	computerChoice.push(randomNum); //Adds random number to computer array
+}
+function play1(){
+	audio1.play();
+}
+function play2(){
+	audio2.play();
+}
+function play3(){
+	audio3.play();
+}
+function play4(){
+	audio4.play();
+}
+function flashComputer(){ //I need someway to delay this function
+	for(var i = 0; i < computerChoice.length; i++){
+		if(computerChoice[i] == 1){
+			setTimeout(play1, k);
+			setTimeout(whiteRed, k + 500);
+			setTimeout(colorRed, k + 600);
+			k += 800;
+		}else if(computerChoice[i] == 2){
+			setTimeout(play2, k);
+			setTimeout(whiteBlue, k + 500);
+			setTimeout(colorBlue, k + 600);
+			k += 800;
+		}else if(computerChoice[i] == 3){
+			setTimeout(play3, k);
+			setTimeout(whiteGreen, k + 500);
+			setTimeout(colorGreen, k + 600);
+			k += 800;
+		}else if(computerChoice[i] == 4){
+			setTimeout(play4, k);
+			setTimeout(whiteYellow, k + 500);
+			setTimeout(colorYellow, k + 600);
+			k += 800;
+		}
+	}
+}
+
+function red(){
+	userChoice.push(1);
+	console.log(userChoice);
+	j++;
+	if(userChoice[j] == computerChoice[j]){
+		win = true; 
+	}else{
+		win = false;
+	}
+}
+function blue(){
+	userChoice.push(2);
+	console.log(userChoice);
+	j++;
+	if(userChoice[j] == computerChoice[j]){
+		win = true; 
+	}else{
+		win = false; 
+	}
+}
+function green(){
+	userChoice.push(3);
+	console.log(userChoice);
+	j++;
+	if(userChoice[j] == computerChoice[j]){
+		win = true; 
+	}else{
+		win = false; 
+	}
+}
+function yellow(){
+	userChoice.push(4);
+	console.log(userChoice);
+	j++;
+	if(userChoice[j] == computerChoice[j]){
+		win = true; 
+	}else{
+		win = false;
+	}
+}
+function comContinue(){
+	if (userChoice.length == computerChoice.length){ 
+		j = -1; //Resets user counter
+		winCounter++; // Adds to win counter 
+		userChoice = []; //Clears user imputs
+		comChoice(); // Adds number to computer array
+		i = 0;
+		k = 500;
+		console.log(computerChoice);
+		flashComputer(); // Flashes computer array
+	}
+}
+function checkWin(){
+	if (win == false){
+		document.getElementById('red').style.display = "none";
+		document.getElementById('blue').style.display = "none";
+		document.getElementById('green').style.display = "none";
+		document.getElementById('yellow').style.display = "none";
+		document.getElementById('startButton').style.display = "none";
+		document.getElementById('gameResults').innerHTML = "Game Over!";
+	}
+}
+function wins(){
+	if (win == true){
+	document.getElementById("gameResults").innerHTML = "Your Score Is:" + " " + winCounter;
+	}
+}
+</script>
+</head>
+<body>
+<script>
+var computerChoice = []; 
+var winCounter = 0;
+var k = 500;
+var userChoice = [];
+var j = -1; //Since I increment the counter every time, and arrays are 0-indexed, I start on -1
+var win = true;
+var audio1 = new Audio('simonSound1.mp3');
+var audio2 = new Audio('simonSound2.mp3');
+var audio3 = new Audio('simonSound3.mp3');
+var audio4 = new Audio('simonSound4.mp3');
+</script>
+<div style="position: fixed; height: 150px; width: 150px; background-color: red;" id="red" onClick="red();setTimeout(whiteRed, 100);setTimeout(colorRed, 200);checkWin();comContinue();wins();"></div>
+
+<div style="position: fixed; height: 150px; width: 150px; background-color: blue; top: 165px;" id="blue" onClick="blue();setTimeout(whiteBlue, 100);setTimeout(colorBlue, 200);checkWin();comContinue();wins();" ></div>
+
+<div style="position: fixed; height: 150px; width: 150px; background-color: green; left: 165px;" id="green" onClick="green();setTimeout(whiteGreen, 100);setTimeout(colorGreen, 200);checkWin();comContinue();wins();"></div>
+
+<div style="position: fixed; height: 150px; width: 150px; background-color: yellow; left: 165px; top: 165px;" id="yellow" onClick="yellow();setTimeout(whiteYellow, 100);setTimeout(colorYellow, 200);checkWin();comContinue();wins();"></div>
+
+<button id="startButton" type="button" style="position: fixed; top: 150px; left: 110px;" onClick="startGame();flashComputer();">Click to Begin!</button>
+
+<div style="position: fixed; top: 350px; left: 25px; font-family: Calibri; font-size: 40px;" id="gameResults">Your Score Is: 0</div>
+
+</body>
+</html>
